@@ -37,7 +37,7 @@
 ### 环境要求
 
 - Python 3.8+
-- MySQL 5.7+
+- MySQL 8.0+
 
 ### 安装步骤
 
@@ -193,47 +193,47 @@ book_recommendation_system/
 本项目采用MIT许可证。详情请参阅LICENSE文件。 
 
 
-首页: http://127.0.0.1:8000/
-管理后台: http://127.0.0.1:8000/admin/
-用户API: http://127.0.0.1:8000/api/users/
-图书API: http://127.0.0.1:8000/api/books/
+- 首页: http://127.0.0.1:8000/
+- 管理后台: http://127.0.0.1:8000/admin/
+- 用户API: http://127.0.0.1:8000/api/users/
+- 图书API: http://127.0.0.1:8000/api/books/
 
 
-Swagger文档：在浏览器中打开 http://127.0.0.1:8000/swagger/
-这是一个交互式文档，可以直接在网页中测试API
-ReDoc文档：在浏览器中打开 http://127.0.0.1:8000/redoc/
-这是另一种格式的文档，布局更干净，适合阅读
-JSON格式文档：http://127.0.0.1:8000/swagger.json
-这是API规范的原始JSON表示，可用于其他工具导入
+- Swagger文档：在浏览器中打开 http://127.0.0.1:8000/swagger/
+- 这是一个交互式文档，可以直接在网页中测试API
+- ReDoc文档：在浏览器中打开 http://127.0.0.1:8000/redoc/
+- 这是另一种格式的文档，布局更干净，适合阅读
+- JSON格式文档：http://127.0.0.1:8000/swagger.json
+- 这是API规范的原始JSON表示，可用于其他工具导入
 
 基础URL
-首页: http://127.0.0.1:8000/
-管理后台: http://127.0.0.1:8000/admin/
-REST框架登录: http://127.0.0.1:8000/api-auth/
+- 首页: http://127.0.0.1:8000/
+- 管理后台: http://127.0.0.1:8000/admin/
+- REST框架登录: http://127.0.0.1:8000/api-auth/
 
 API文档
-Swagger文档: http://127.0.0.1:8000/swagger/
-ReDoc文档: http://127.0.0.1:8000/redoc/
-JSON格式文档: http://127.0.0.1:8000/swagger.json
+- Swagger文档: http://127.0.0.1:8000/swagger/
+- ReDoc文档: http://127.0.0.1:8000/redoc/
+- JSON格式文档: http://127.0.0.1:8000/swagger.json
 
 用户相关API
-用户列表: http://127.0.0.1:8000/api/users/users/
-用户详情: http://127.0.0.1:8000/api/users/users/{id}/
-当前用户: http://127.0.0.1:8000/api/users/users/me/
-用户登录: http://127.0.0.1:8000/api/users/users/login/
-用户注销: http://127.0.0.1:8000/api/users/users/logout/
-用户资料: http://127.0.0.1:8000/api/users/users/{id}/profile/
+- 用户列表: http://127.0.0.1:8000/api/users/users/
+- 用户详情: http://127.0.0.1:8000/api/users/users/{id}/
+- 当前用户: http://127.0.0.1:8000/api/users/users/me/
+- 用户登录: http://127.0.0.1:8000/api/users/users/login/
+- 用户注销: http://127.0.0.1:8000/api/users/users/logout/
+- 用户资料: http://127.0.0.1:8000/api/users/users/{id}/profile/
 
 图书相关API
-图书列表: http://127.0.0.1:8000/api/books/books/
-图书详情: http://127.0.0.1:8000/api/books/books/{id}/
-图书分类列表: http://127.0.0.1:8000/api/books/categories/
-图书分类详情: http://127.0.0.1:8000/api/books/categories/{id}/
-图书评论列表: http://127.0.0.1:8000/api/books/comments/
-图书评论详情: http://127.0.0.1:8000/api/books/comments/{id}/
+- 图书列表: http://127.0.0.1:8000/api/books/books/
+- 图书详情: http://127.0.0.1:8000/api/books/books/{id}/
+- 图书分类列表: http://127.0.0.1:8000/api/books/categories/
+- 图书分类详情: http://127.0.0.1:8000/api/books/categories/{id}/
+- 图书评论列表: http://127.0.0.1:8000/api/books/comments/
+- 图书评论详情: http://127.0.0.1:8000/api/books/comments/{id}/
 
 每个列表API还支持以下参数：
-分页：?page=2（获取第2页数据）
-每页显示数：?page_size=20（每页显示20条记录）
-排序：?ordering=name（按名称升序）或?ordering=-name（降序）
-您可以在Swagger文档中查看每个API的详细参数和使用方法，包括请求体格式和响应格式。
+- 分页：?page=2（获取第2页数据）
+- 每页显示数：?page_size=20（每页显示20条记录）
+- 排序：?ordering=name（按名称升序）或?ordering=-name（降序）
+- 您可以在Swagger文档中查看每个API的详细参数和使用方法，包括请求体格式和响应格式。
