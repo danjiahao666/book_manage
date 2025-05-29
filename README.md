@@ -1,6 +1,7 @@
 # 智能图书推荐系统
 
 这是一个基于Django和Django REST Framework开发的智能图书推荐系统的后端API。该系统提供图书管理、用户管理、评论管理以及基于用户行为的图书推荐功能。
+开发人员：淡嘉浩、韦荣健、韦贻元
 
 ## 功能特点
 
@@ -44,7 +45,7 @@
 1. 克隆项目
 
 ```bash
-git clone <项目地址>
+git clone https://github.com/danjiahao666/book_manage.git
 cd book_recommendation_system
 ```
 
@@ -64,7 +65,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-4. 配置数据库
+4. 配置数据库(确保mysql在8.0以上)
 
 编辑 `book_recommendation_system/settings.py` 文件中的数据库配置：
 
@@ -74,7 +75,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'book_recommendation',  # 数据库名称
         'USER': 'root',                # 数据库用户名
-        'PASSWORD': 'password',        # 数据库密码
+        'PASSWORD': '123456',        # 数据库密码
         'HOST': 'localhost',           # 数据库主机
         'PORT': '3306',                # 数据库端口
     }
