@@ -53,6 +53,9 @@ cd book_recommendation_system
 ```bash
 rmdir /s /q venv
 python -m venv venv
+
+进入虚拟环境
+.\venv\Scripts\Activate.ps1
 ```
 
 3. 安装依赖
@@ -112,7 +115,7 @@ python manage.py runserver
 启动服务器后，可以通过以下地址访问API文档：
 
 ```
-(http://127.0.0.1:8000/swagger/)
+http://127.0.0.1:8000/swagger
 ```
 
 ### 主要API端点
