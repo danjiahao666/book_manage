@@ -112,7 +112,7 @@ python manage.py runserver
 启动服务器后，可以通过以下地址访问API文档：
 
 ```
-http://localhost:8000/docs/
+(http://127.0.0.1:8000/swagger/)
 ```
 
 ### 主要API端点
