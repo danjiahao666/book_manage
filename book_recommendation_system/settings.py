@@ -100,6 +100,10 @@ DATABASES = {
         'PASSWORD': '123456',        # 数据库密码
         'HOST': 'localhost',           # 数据库主机
         'PORT': '3306',                # 数据库端口
+        'OPTIONS': {
+            'charset': 'utf8mb4',      # 使用utf8mb4字符集
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'", # 设置SQL模式
+        },
     }
 }
 
@@ -132,7 +136,8 @@ TIME_ZONE = 'Asia/Shanghai'  # 使用中国时区
 
 USE_I18N = True
 
-USE_TZ = True
+# 修改时区设置，暂时关闭以解决管理界面日期时间问题
+USE_TZ = False  # 修改为False，避免时区转换问题
 
 
 # Static files (CSS, JavaScript, Images)
