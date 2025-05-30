@@ -28,6 +28,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+  
+
+ 
+
+# 允许所有来源的跨域请求（开发环境）
+CORS_ALLOW_ALL_ORIGINS = True
+   # 或者指定允许的域名
+   # CORS_ALLOWED_ORIGINS = [
+   #     "http://localhost:5173",  # Vue开发服务器默认端口
+   # ]
 
 # Application definition
 
@@ -40,13 +50,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 第三方应用
     'rest_framework',  # RESTful API框架
+    'rest_framework.authtoken',  # 添加Token认证应用
     'drf_yasg',  # Swagger文档生成器
+    'corsheaders',
     # 自定义应用
     'books',  # 图书应用
     'users',  # 用户应用
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # 必须放在最前面
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -140,6 +153,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # REST框架设置
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # 添加Token认证
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
@@ -147,7 +161,12 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
+    'PAGE_SIZE': 100,  # 将默认分页大小从10改为100
+    'MAX_PAGE_SIZE': 1000,  # 添加最大分页大小限制
     # 设置正确的schema类
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
+
+# 添加CORS设置
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True

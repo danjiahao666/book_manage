@@ -1,12 +1,55 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status, permissions
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from rest_framework.authtoken.models import Token
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import UserProfile
 from .serializers import UserSerializer, UserProfileSerializer
+
+@api_view(['POST'])
+@permission_classes([permissions.AllowAny])
+@csrf_exempt
+def token_auth(request):
+    """
+    Token认证视图 - 用于前端登录
+    """
+    print("接收到登录请求:", request.data)
+    
+    username = request.data.get('username')
+    password = request.data.get('password')
+    
+    if not username or not password:
+        print("缺少用户名或密码")
+        return Response(
+            {"detail": "请提供用户名和密码"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    user = authenticate(username=username, password=password)
+    
+    if not user:
+        print(f"认证失败: {username}")
+        return Response(
+            {"detail": "用户名或密码错误"},
+            status=status.HTTP_401_UNAUTHORIZED
+        )
+    
+    # 获取或创建Token
+    token, created = Token.objects.get_or_create(user=user)
+    
+    # 返回用户信息和Token
+    serializer = UserSerializer(user)
+    response_data = {
+        'user': serializer.data,
+        'token': token.key
+    }
+    
+    print("认证成功，返回数据:", response_data)
+    return Response(response_data)
 
 class UserViewSet(viewsets.ModelViewSet):
     """

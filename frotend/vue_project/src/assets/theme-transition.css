@@ -1,0 +1,42 @@
+/* 
+ * 主题切换过渡动画
+ * 参考：https://vueuse.org/core/useDark/
+ * 和 https://element-plus.org/zh-CN/guide/dark-mode.html
+ */
+
+/* 定义过渡时间变量 */
+:root {
+  --theme-transition-duration: 0.8s;
+}
+
+/* 应用过渡效果到全局元素 */
+html, 
+body {
+  transition: background-color var(--theme-transition-duration) ease,
+              color var(--theme-transition-duration) ease !important;
+}
+
+/* 应用过渡效果到所有子元素 */
+*, 
+*::before, 
+*::after {
+  transition: background-color var(--theme-transition-duration) ease,
+              color var(--theme-transition-duration) ease,
+              border-color var(--theme-transition-duration) ease,
+              box-shadow var(--theme-transition-duration) ease !important;
+}
+
+/* 为特定元素类型添加过渡效果 */
+.el-card,
+.el-button,
+.el-menu,
+.el-menu-item,
+header,
+footer,
+main,
+.book-management-app,
+.bg-white {
+  transition: background-color var(--theme-transition-duration) ease,
+              color var(--theme-transition-duration) ease,
+              border-color var(--theme-transition-duration) ease !important;
+} 

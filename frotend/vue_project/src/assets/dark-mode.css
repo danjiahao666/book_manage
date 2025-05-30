@@ -1,0 +1,93 @@
+/* 
+ * 暗黑模式样式覆盖
+ * 为图书列表、分类管理和关于我们页面提供暗黑模式下的浅色字体设置
+ */
+
+/* 通用文本颜色覆盖 */
+html.dark .text-gray-900,
+html.dark .text-gray-800,
+html.dark .text-gray-700,
+html.dark .text-gray-600 {
+  color: #e0e0e0 !important;
+}
+
+html.dark .text-gray-500 {
+  color: #bdbdbd !important;
+}
+
+/* 页面特定样式覆盖 */
+
+/* 图书列表页 */
+html.dark .books-view h1,
+html.dark .books-view h2,
+html.dark .books-view h3 {
+  color: #f5f5f5 !important;
+}
+
+html.dark .el-table {
+  --el-table-text-color: #e0e0e0;
+  --el-table-header-text-color: #f5f5f5;
+}
+
+html.dark .el-dialog__title {
+  color: #f5f5f5 !important;
+}
+
+html.dark .el-form-item__label {
+  color: #e0e0e0 !important;
+}
+
+/* 分类管理页 */
+html.dark .categories-view .el-card {
+  --el-card-bg-color: #1f1f1f;
+  color: #e0e0e0;
+}
+
+html.dark .categories-view h1,
+html.dark .categories-view h3 {
+  color: #f5f5f5 !important;
+}
+
+/* 关于我们页 */
+html.dark .about-view h1,
+html.dark .about-view h2,
+html.dark .about-view h3 {
+  color: #f5f5f5 !important;
+}
+
+html.dark .about-view .bg-white {
+  background-color: #1f1f1f !important;
+}
+
+html.dark .about-view .list-disc li {
+  color: #e0e0e0 !important;
+}
+
+/* 对话框样式 */
+html.dark .el-dialog {
+  --el-dialog-bg-color: #1a1a1a;
+  --el-dialog-text-color: #e0e0e0;
+}
+
+/* 表单样式 */
+html.dark .el-input__inner {
+  color: #e0e0e0 !important;
+}
+
+/* 按钮文本样式 */
+html.dark .el-button:not(.el-button--primary):not(.el-button--danger) {
+  color: #e0e0e0 !important;
+}
+
+/* 表格样式 */
+html.dark .el-table tr {
+  background-color: #1a1a1a !important;
+}
+
+html.dark .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  background-color: #262626 !important;
+}
+
+html.dark .el-table__header-wrapper th.el-table__cell {
+  background-color: #2c2c2c !important;
+} 

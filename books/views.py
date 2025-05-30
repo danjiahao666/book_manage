@@ -33,6 +33,35 @@ class CategoryViewSet(viewsets.ModelViewSet):
     search_fields = ['name']
     ordering_fields = ['name', 'created_at']
     ordering = ['name']
+    
+    @action(detail=True, methods=['get'])
+    def books(self, request, pk=None):
+        """
+        获取指定分类下的所有图书
+        """
+        try:
+            # 获取当前分类
+            category = self.get_object()
+            
+            # 获取该分类下的所有图书
+            books = Book.objects.filter(category=category)
+            
+            # 分页处理
+            page = self.paginate_queryset(books)
+            if page is not None:
+                serializer = BookSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            
+            # 不使用分页的情况
+            serializer = BookSerializer(books, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            # 添加详细的错误日志
+            print(f"获取分类图书错误: {str(e)}")
+            return Response(
+                {"detail": f"获取分类图书失败: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 class BookViewSet(viewsets.ModelViewSet):
     """
@@ -55,6 +84,18 @@ class BookViewSet(viewsets.ModelViewSet):
         if self.action == 'retrieve':
             return BookDetailSerializer
         return BookSerializer
+    
+    def get_queryset(self):
+        """
+        重写获取查询集的方法，支持禁用分页
+        """
+        queryset = super().get_queryset()
+        
+        # 如果请求中包含no_page参数，则不进行分页
+        if self.request.query_params.get('no_page', False):
+            self.pagination_class = None
+        
+        return queryset
     
     def retrieve(self, request, *args, **kwargs):
         """
@@ -164,6 +205,16 @@ class BookViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(top_rated_books, many=True)
         return Response(serializer.data)
 
+    @action(detail=True, methods=['get'])
+    def reviews(self, request, pk=None):
+        """
+        获取指定图书的所有评论
+        """
+        book = self.get_object()
+        comments = Comment.objects.filter(book=book)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
 class CommentViewSet(viewsets.ModelViewSet):
     """
     图书评论视图集
@@ -205,7 +256,38 @@ class CommentViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         """创建评论时自动关联当前用户"""
-        serializer.save(user=self.request.user)
+        book_id = self.request.data.get('book')
+        # 检查用户是否已经评论过这本书
+        try:
+            existing_comment = Comment.objects.get(
+                user=self.request.user,
+                book_id=book_id
+            )
+            # 如果已存在评论，则更新它
+            existing_comment.content = self.request.data.get('content', existing_comment.content)
+            existing_comment.rating = self.request.data.get('rating', existing_comment.rating)
+            existing_comment.save()
+            # 设置一个标志表示已更新现有评论
+            self.updated_existing = True
+            self.existing_comment = existing_comment
+        except Comment.DoesNotExist:
+            # 如果评论不存在，则创建新评论
+            serializer.save(user=self.request.user)
+            self.updated_existing = False
+    
+    def create(self, request, *args, **kwargs):
+        """重写创建方法，处理更新现有评论的情况"""
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        
+        # 如果更新了现有评论，返回更新后的评论
+        if hasattr(self, 'updated_existing') and self.updated_existing:
+            serializer = self.get_serializer(self.existing_comment)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     
     def update(self, request, *args, **kwargs):
         """

@@ -1,7 +1,25 @@
 # 智能图书推荐系统
 
-这是一个基于Django和Django REST Framework开发的智能图书推荐系统的后端API。该系统提供图书管理、用户管理、评论管理以及基于用户行为的图书推荐功能。
+这是一个基于Django和Vue.js开发的智能图书推荐系统，提供图书管理、用户管理、评论管理以及基于用户行为的图书推荐功能。
 开发人员：淡嘉浩、韦荣健、韦贻元
+
+## 系统架构
+
+### 前端技术栈
+- Vue 3 - 渐进式JavaScript框架
+- Vue Router - 官方路由管理器
+- Pinia - 状态管理库
+- Element Plus - UI组件库
+- Axios - HTTP客户端
+- Tailwind CSS - 实用工具优先的CSS框架
+- ECharts - 数据可视化图表库
+
+### 后端技术栈
+- Django - Python Web框架
+- Django REST Framework - RESTful API工具包
+- MySQL - 关系型数据库
+- JWT - 用户认证
+- Swagger/OpenAPI - API文档
 
 ## 功能特点
 
@@ -26,12 +44,36 @@
    - 基于用户浏览历史的图书推荐
    - 基于用户评分的图书推荐
 
-## 技术栈
+## 系统功能详情
 
-- **后端框架**: Django 5.2
-- **API框架**: Django REST Framework 3.16
-- **数据库**: MySQL
-- **认证**: Django Session认证
+### 首页
+首页展示系统统计信息和最新图书，包括图书总数、分类总数、热门分类等。页面顶部还提供了随机图书推荐功能。
+
+### 图书列表
+图书列表页面提供所有图书的详细信息，支持以下功能:
+- 搜索图书：根据书名、作者等关键词搜索
+- 筛选图书：按分类筛选
+- 排序图书：按书名、价格、出版日期等排序
+- 查看详情：查看图书的详细信息和评论
+- 添加/编辑/删除图书：管理图书信息
+
+### 分类管理
+分类管理页面用于管理图书分类，提供以下功能:
+- 查看所有分类及其包含的图书数量
+- 添加新分类
+- 编辑分类信息
+- 删除空分类（只有没有关联图书的分类才能删除）
+- 查看分类下的所有图书
+
+### 关于页面
+关于页面提供系统相关信息，包括:
+- 系统介绍
+- 技术架构
+- 功能说明
+- 开发团队
+- 联系方式
+- API文档链接
+- 版本信息
 
 ## 安装与运行
 
@@ -39,8 +81,9 @@
 
 - Python 3.8+
 - MySQL 8.0+
+- NodeJS 22.0+
 
-### 安装步骤
+### 后端安装部署
 
 1. 克隆项目
 
@@ -52,11 +95,16 @@ cd book_recommendation_system
 2. 创建并激活虚拟环境
 
 ```bash
+# Windows
 rmdir /s /q venv
 python -m venv venv
+.\venv\Scripts\Activate.ps1  # PowerShell
+# 或
+.\venv\Scripts\activate.bat  # CMD
 
-进入虚拟环境
-.\venv\Scripts\Activate.ps1
+# Linux/macOS
+python -m venv venv
+source venv/bin/activate
 ```
 
 3. 安装依赖
@@ -97,6 +145,8 @@ CREATE DATABASE book_recommendation CHARACTER SET utf8mb4 COLLATE utf8mb4_unicod
 ```bash
 python manage.py makemigrations
 python manage.py migrate
+
+在可视化软件上运行insert_books_data.sql，导入书籍数据
 ```
 
 7. 创建超级用户
@@ -111,13 +161,44 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+### 前端安装部署
+
+1. 安装依赖:
+```bash
+cd frotend/vue_project
+npm install
+```
+
+2. 启动开发服务器:
+```bash
+npm run dev
+```
+
+3. 构建生产版本:
+```bash
+npm run build
+```
+
 ## API接口文档
 
 启动服务器后，可以通过以下地址访问API文档：
 
 ```
 http://127.0.0.1:8000/swagger
+http://127.0.0.1:8000/redoc
 ```
+
+### 常用URL
+
+基础URL
+- 首页: http://127.0.0.1:8000/
+- 管理后台: http://127.0.0.1:8000/admin/
+- REST框架登录: http://127.0.0.1:8000/api-auth/
+
+API文档
+- Swagger文档: http://127.0.0.1:8000/swagger/
+- ReDoc文档: http://127.0.0.1:8000/redoc/
+- JSON格式文档: http://127.0.0.1:8000/swagger.json
 
 ### 主要API端点
 
@@ -157,6 +238,11 @@ http://127.0.0.1:8000/swagger
 - `PUT /api/books/comments/{id}/`: 更新评论（仅评论作者）
 - `DELETE /api/books/comments/{id}/`: 删除评论（仅评论作者或管理员）
 
+每个列表API还支持以下参数：
+- 分页：?page=2（获取第2页数据）
+- 每页显示数：?page_size=20（每页显示20条记录）
+- 排序：?ordering=name（按名称升序）或?ordering=-name（降序）
+
 ## 项目结构
 
 ```
@@ -184,59 +270,28 @@ book_recommendation_system/
 │   ├── signals.py               # 信号处理
 │   ├── urls.py                  # URL路由
 │   └── views.py                 # 视图
+├── frotend/                     # 前端目录
+│   └── vue_project/             # Vue项目目录
 ├── media/                       # 媒体文件目录
 ├── static/                      # 静态文件目录
 ├── manage.py                    # Django管理脚本
 └── README.md                    # 项目说明文档
 ```
 
+## 贡献
+
+欢迎贡献代码或提出建议，请遵循以下步骤:
+1. Fork 本仓库
+2. 创建新的分支 (`git checkout -b feature/amazing-feature`)
+3. 提交更改 (`git commit -m 'Add some amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 创建Pull Request
 
 ## 许可证
 
-本项目采用MIT许可证。详情请参阅LICENSE文件。 
+本项目采用MIT许可证。详情请参阅LICENSE文件。
 
+## 联系方式
 
-- 首页: http://127.0.0.1:8000/
-- 管理后台: http://127.0.0.1:8000/admin/
-- 用户API: http://127.0.0.1:8000/api/users/
-- 图书API: http://127.0.0.1:8000/api/books/
-
-
-- Swagger文档：在浏览器中打开 http://127.0.0.1:8000/swagger/
-- 这是一个交互式文档，可以直接在网页中测试API
-- ReDoc文档：在浏览器中打开 http://127.0.0.1:8000/redoc/
-- 这是另一种格式的文档，布局更干净，适合阅读
-- JSON格式文档：http://127.0.0.1:8000/swagger.json
-- 这是API规范的原始JSON表示，可用于其他工具导入
-
-基础URL
-- 首页: http://127.0.0.1:8000/
-- 管理后台: http://127.0.0.1:8000/admin/
-- REST框架登录: http://127.0.0.1:8000/api-auth/
-
-API文档
-- Swagger文档: http://127.0.0.1:8000/swagger/
-- ReDoc文档: http://127.0.0.1:8000/redoc/
-- JSON格式文档: http://127.0.0.1:8000/swagger.json
-
-用户相关API
-- 用户列表: http://127.0.0.1:8000/api/users/users/
-- 用户详情: http://127.0.0.1:8000/api/users/users/{id}/
-- 当前用户: http://127.0.0.1:8000/api/users/users/me/
-- 用户登录: http://127.0.0.1:8000/api/users/users/login/
-- 用户注销: http://127.0.0.1:8000/api/users/users/logout/
-- 用户资料: http://127.0.0.1:8000/api/users/users/{id}/profile/
-
-图书相关API
-- 图书列表: http://127.0.0.1:8000/api/books/books/
-- 图书详情: http://127.0.0.1:8000/api/books/books/{id}/
-- 图书分类列表: http://127.0.0.1:8000/api/books/categories/
-- 图书分类详情: http://127.0.0.1:8000/api/books/categories/{id}/
-- 图书评论列表: http://127.0.0.1:8000/api/books/comments/
-- 图书评论详情: http://127.0.0.1:8000/api/books/comments/{id}/
-
-每个列表API还支持以下参数：
-- 分页：?page=2（获取第2页数据）
-- 每页显示数：?page_size=20（每页显示20条记录）
-- 排序：?ordering=name（按名称升序）或?ordering=-name（降序）
-- 您可以在Swagger文档中查看每个API的详细参数和使用方法，包括请求体格式和响应格式。
+如有任何问题或建议，请联系:
+- 邮箱: 390482691@qq.com 
